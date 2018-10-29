@@ -20,21 +20,21 @@ app.use(bodyParser.json());
 
 //Used during deployment
 
-// const db = new Client({
-//     connectionString: process.env.DATABASE_URL,
-//     ssl: true,
-// })
+const db = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true,
+})
 
 
 //Used for development
 
-const db = new Client({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'final',
-    password: 'nipun',
-    port: 5432,
-  })
+// const db = new Client({
+//     user: 'postgres',
+//     host: 'localhost',
+//     database: 'final',
+//     password: 'nipun',
+//     port: 5432,
+//   })
 
 db.connect();
 
