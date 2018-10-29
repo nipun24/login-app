@@ -36,7 +36,7 @@ class SignUp extends Component {
   }
 
   onSignUp = () => {
-    fetch('https://infinite-hamlet-28839.herokuapp.com/signup', {
+    fetch('http://localhost:8080/signup', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({

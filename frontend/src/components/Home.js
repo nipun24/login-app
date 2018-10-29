@@ -32,7 +32,7 @@ class Home extends Component {
   }
 
   componentDidMount = () => {
-    fetch('https://infinite-hamlet-28839.herokuapp.com/home', {
+    fetch('http://localhost:8080/home', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({

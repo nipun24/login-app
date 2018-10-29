@@ -20,21 +20,21 @@ app.use(bodyParser.json());
 
 //Used during deployment
 
-const db = new Client({
-    connectionString: process.env.DATABASE_URL,
-    ssl: true,
-})
+// const db = new Client({
+//     connectionString: process.env.DATABASE_URL,
+//     ssl: true,
+// })
 
 
 //Used for development
 
-// const db = new Client({
-//     user: 'postgres',
-//     host: 'localhost',
-//     database: 'final',
-//     password: 'nipun',
-//     port: 5432,
-//   })
+const db = new Client({
+    user: 'postgres',
+    host: 'localhost',
+    database: 'final',
+    password: 'nipun',
+    port: 5432,
+  })
 
 db.connect();
 
@@ -48,7 +48,7 @@ app.post('/signin', (req, res) => {
         if(error){
             res.status(400).send(false);
         }
-        else if(results.rowCount = 0){
+        else if(results.rowCount === 0){
             res.status(400).send(false);
         }
         else{
