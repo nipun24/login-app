@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken');
 
 
 const app = express();
-const port = 3000;
+const port = 8080;
 const root = path.join(__dirname,'./frontend/build');
 
 app.use(express.static(root));
@@ -17,19 +17,24 @@ app.use(fallback('index.html', { root: root }))
 app.use(cors());
 app.use(bodyParser.json());
 
-//Database constants
-// const db = new Client({
-//     connectionString: process.env.DATABASE_URL,
-//     ssl: true,
-// })
+
+//Used during deployment
 
 const db = new Client({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'final',
-    password: 'nipun',
-    port: 5432,
-  })
+    connectionString: process.env.DATABASE_URL,
+    ssl: true,
+})
+
+
+//Used for development
+
+// const db = new Client({
+//     user: 'postgres',
+//     host: 'localhost',
+//     database: 'final',
+//     password: 'nipun',
+//     port: 5432,
+//   })
 
 db.connect();
 
@@ -73,12 +78,10 @@ app.post('/home',(req,res) => {
     jwt.verify(req.body.token, 'b9e88579af34e13717f84345039b8b4d', function(err, decoded) {
         if(decoded){
             db.query(`SELECT * FROM CUSTOMER VALUES WHERE PHONE_NO = ${decoded.phoneNumber}`,(error,results) => {
-                console.log(results.rows);
                 res.status(200).send(results.rows[0]);
             })            
         }
         else if(err){
-            console.log(err);
             res.status(400).send(false);
         }
       });
