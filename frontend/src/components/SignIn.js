@@ -12,6 +12,13 @@ class SignIn extends Component {
     }
   }
 
+  componentDidMount = () => {
+    const token = sessionStorage.getItem('token');
+    if(token !== null){
+      this.setState({route: 'home'});
+    }
+  }
+
   onPhoneNumberChange = (event) => {
     this.setState({signInPhoneNumber: event.target.value})
   }
