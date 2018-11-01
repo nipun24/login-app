@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Redirect} from 'react-router-dom';
-import { TextField, Button, Grid, Typography, Card, Dialog, DialogActions, DialogTitle } from '@material-ui/core';
+import { TextField, Button, Grid, Typography, Card, Dialog, DialogActions, DialogTitle, CircularProgress } from '@material-ui/core';
 
 class SignIn extends Component {
   constructor(props) {
@@ -33,6 +33,7 @@ class SignIn extends Component {
   }
 
   onSignIn = () => {
+    this.setState({route: 'loading'});
     fetch('https://infinite-hamlet-28839.herokuapp.com/signin', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
@@ -45,6 +46,7 @@ class SignIn extends Component {
       .then(data => {
         if(data === false){
           this.setState({alert: true});
+          this.setState({route: "signin"})
         }
         else{
           sessionStorage.setItem('token', data.token);
@@ -58,7 +60,14 @@ class SignIn extends Component {
   }
   
   render() {
-    if(this.state.route === 'signin'){
+    if(this.state.route === 'loading'){
+      return(
+        <Grid container justify="center" alignItems="center" style={{marginTop: "300px"}}>
+          <CircularProgress style={{color: "#ffffff"}}/>
+        </Grid>
+      );
+    }
+    else if(this.state.route === 'signin'){
       return (
         <div style={{marginTop: '50px'}}>
           <Grid container justify="center" alignItems="center">

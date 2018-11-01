@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import {Redirect} from 'react-router-dom';
-import { Button, Grid, Typography, Card, Table, TableBody, TableCell, TableRow } from '@material-ui/core';
+import { Button, Grid, Typography, Card, Table, TableBody, TableCell, TableRow, CircularProgress } from '@material-ui/core';
 
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      route: 'home',
+      route: 'loading',
       userInfo: {
         id: '',
         name: '',
@@ -25,7 +25,8 @@ class Home extends Component {
       phoneNumber: data.phone_no,
       aadhar: data.aadhar,
       password: data.password 
-  }})
+    }})
+    this.setState({route: 'home'})
   }
 
   onLogout = () => {
@@ -53,54 +54,61 @@ class Home extends Component {
   }
 
   render() {
-      if(this.state.route === 'home'){
-        return(
-          <div style={{marginTop: '50px'}}>
-            <Grid container justify="center" alignItems="center">
-              <Card style={{padding: '50px'}}>
-                <Grid container direction="column" justify="center" alignItems="center">
-                  <Typography variant="h3">
-                    User Information
-                  </Typography>
-                  <Table>
-                    <TableBody>
-                      <TableRow>
-                        <TableCell>User ID</TableCell>
-                        <TableCell>{this.state.userInfo.id}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Name</TableCell>
-                        <TableCell>{this.state.userInfo.name}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Phone Number</TableCell>
-                        <TableCell>{this.state.userInfo.phoneNumber}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Aadhar Number</TableCell>
-                        <TableCell>{this.state.userInfo.aadhar}</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Password</TableCell>
-                        <TableCell>{this.state.userInfo.password}</TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                  <Button onClick={this.onLogout} variant="contained" color="primary" style={{marginTop: "20px"}} autoFocus>
-                    Logout
-                  </Button>
-                </Grid>
-              </Card>
-            </Grid>
-          </div>  
-        );
-      }
-      else if(this.state.route === 'signin'){
-        return(
-          <Redirect to="/"/>
-        );
-      }
+    if(this.state.route === 'loading'){
+      return(
+        <Grid container justify="center" alignItems="center" style={{marginTop: "300px"}}>
+          <CircularProgress style={{color: "#ffffff"}}/>
+        </Grid>
+      );     
     }
+    else if(this.state.route === 'home'){
+      return(
+        <div style={{marginTop: '50px'}}>
+          <Grid container justify="center" alignItems="center">
+            <Card style={{padding: '50px'}}>
+              <Grid container direction="column" justify="center" alignItems="center">
+                <Typography variant="h3">
+                  User Information
+                </Typography>
+                <Table>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell>User ID</TableCell>
+                      <TableCell>{this.state.userInfo.id}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Name</TableCell>
+                      <TableCell>{this.state.userInfo.name}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Phone Number</TableCell>
+                      <TableCell>{this.state.userInfo.phoneNumber}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Aadhar Number</TableCell>
+                      <TableCell>{this.state.userInfo.aadhar}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Password</TableCell>
+                      <TableCell>{this.state.userInfo.password}</TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+                <Button onClick={this.onLogout} variant="contained" color="primary" style={{marginTop: "20px"}} autoFocus>
+                  Logout
+                </Button>
+              </Grid>
+            </Card>
+          </Grid>
+        </div>  
+      );
+    }
+    else if(this.state.route === 'signin'){
+      return(
+        <Redirect to="/"/>
+      );
+    }
+  }
 }
 
 export default Home;
