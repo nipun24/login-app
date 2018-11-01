@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {Redirect} from 'react-router-dom';
+import { Button, Grid, Typography, Card, Table, TableBody, TableCell, TableRow } from '@material-ui/core';
+
 
 class Home extends Component {
   constructor(props) {
@@ -11,7 +13,7 @@ class Home extends Component {
         name: '',
         phoneNumber: '',
         aadhar: '',
-        password: ''
+        password: '',
       }
     }
   };
@@ -42,7 +44,7 @@ class Home extends Component {
       .then(response => response.json())
       .then(data => {
         if(data === false){
-          alert('Error Retreiving data');
+          this.setState({route: 'signin'});
         }
         else{
           this.updateUserInfo(data);
@@ -53,30 +55,44 @@ class Home extends Component {
   render() {
       if(this.state.route === 'home'){
         return(
-          <div className="ma4 flex flex-column tc">
-              <div className="ba flex flex-column db">
-                <p className="f1 ma2 b">User Information</p>
-                <p className="f3 ma2 b">ID</p>
-                <p className="f3 ma2">{this.state.userInfo.id}</p>
-                <p className="f3 ma2 b">Name</p>
-                <p className="f3 ma2">{this.state.userInfo.name}</p>
-                <p className="f3 ma2 b">Phone Number</p>
-                <p className="f3 ma2">{this.state.userInfo.phoneNumber}</p>
-                <p className="f3 ma2 b">Aadhar Card Number</p>
-                <p className="f3 ma2">{this.state.userInfo.aadhar}</p>
-                <p className="f3 ma2 b">Password</p>
-                <p className="f3 ma2">{this.state.userInfo.password}</p>
-              </div>
-              <div className="ma4">
-                <a 
-                  onClick={this.onLogout}
-                  className="f6 link dim ba ph3 pv2 mb2 dib black grow" 
-                  href="#0">
-                  Logout
-                </a>
-              </div>
-          </div>
-  
+          <div style={{marginTop: '50px'}}>
+            <Grid container justify="center" alignItems="center">
+              <Card style={{padding: '50px'}}>
+                <Grid container direction="column" justify="center" alignItems="center">
+                  <Typography variant="h3">
+                    User Information
+                  </Typography>
+                  <Table>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell>User ID</TableCell>
+                        <TableCell>{this.state.userInfo.id}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Name</TableCell>
+                        <TableCell>{this.state.userInfo.name}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Phone Number</TableCell>
+                        <TableCell>{this.state.userInfo.phoneNumber}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Aadhar Number</TableCell>
+                        <TableCell>{this.state.userInfo.aadhar}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Password</TableCell>
+                        <TableCell>{this.state.userInfo.password}</TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                  <Button onClick={this.onLogout} variant="contained" color="primary" style={{marginTop: "20px"}} autoFocus>
+                    Logout
+                  </Button>
+                </Grid>
+              </Card>
+            </Grid>
+          </div>  
         );
       }
       else if(this.state.route === 'signin'){
