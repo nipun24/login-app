@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {Redirect} from 'react-router-dom';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-
+import { TextField, Button, Grid, Typography, Card, Dialog, DialogActions, DialogTitle } from '@material-ui/core';
 
 class SignUp extends Component {
   constructor(props) {
@@ -11,7 +10,8 @@ class SignUp extends Component {
       Password: '',
       Name: '',
       Aadhar: '',
-      route: 'signup'
+      route: 'signup',
+      alert: false
     }
   }
 
@@ -20,6 +20,10 @@ class SignUp extends Component {
     if(token !== null){
       this.setState({route: 'home'});
     }
+  }
+
+  handleAlertClose = () => {
+    this.setState({alert: false})
   }
 
   onPhoneNumberChange = (event) => {
@@ -56,7 +60,7 @@ class SignUp extends Component {
     .then(response => response.json())
     .then(data => {
       if(data === false){
-        alert('Error Signing up. Check credentials');
+        this.setState({alert: true})
       }
       else{
         sessionStorage.setItem('token', data.token);
@@ -68,37 +72,64 @@ class SignUp extends Component {
   render() {
     if(this.state.route === 'signup'){
       return (
-        <div>
-          <Form>
-            <FormGroup>
-              <h1>Sign Up</h1>
-            </FormGroup>
-            <FormGroup>
-              <Label>Name</Label>
-              <Input onChange={this.onNameChange} type="text" placeholder="Enter Name" />
-            </FormGroup>
-            <FormGroup>
-              <Label>Phone Number</Label>
-              <Input onChange={this.onPhoneNumberChange} type="text" placeholder="Enter Phone Number" />
-            </FormGroup>
-            <FormGroup>
-              <Label>Aadhar Number</Label>
-              <Input onChange={this.onAadharChange} type="text" placeholder="Enter Aadhar Number" />
-            </FormGroup>
-            <FormGroup>
-              <Label>Password</Label>
-              <Input onChange={this.onPasswordChange} type="password" placeholder="Enter Password  " />
-            </FormGroup>
-            <FormGroup>
-              <Button onClick={this.onSignUp} color="primary" size="lg" block>Sign Up</Button>
-            </FormGroup>
-            <FormGroup>
-              <a onClick={this.onSignInClick} className="f6 link dim black db" href="#0">
-                Sign in
-              </a>
-            </FormGroup>
-          </Form>
-        </div>
+        <div style={{marginTop: '50px'}}>
+        <Grid container justify="center" alignItems="center">
+          <Card style={{padding: '50px'}}>
+            <Grid container direction="column" justify="center" alignItems="center">
+              <Typography variant="h3">
+                Sign Up
+              </Typography>
+              <TextField
+                type="text"
+                label="Enter Name"
+                placeholder="Enter Name"
+                margin="normal"
+                onChange={this.onNameChange}
+              />
+              <TextField
+                type="text"
+                label="Enter Aadhar Number"
+                placeholder="Enter Aadhar Number"
+                margin="normal"
+                onChange={this.onAadharChange}
+              />
+              <TextField
+                type="text"
+                label="Enter Phone Number"
+                placeholder="Enter Phone Number"
+                margin="normal"
+                onChange={this.onPhoneNumberChange}
+              />
+              <TextField
+                type="password"
+                label="Enter Password"
+                placeholder="Enter Phone Number"
+                margin="normal"
+                onChange={this.onPasswordChange}
+              />
+              <Button variant="contained" color="primary" onClick={this.onSignUp} style={{marginTop: '20px'}}>
+                Sign Up
+              </Button> 
+              <Typography style={{ cursor: 'pointer', marginTop: '20px' }} onClick={this.onSignInClick}>
+                Sign In?
+              </Typography>
+            </Grid>
+          </Card>
+        </Grid>
+        <Dialog
+          open={this.state.alert}
+          onClose={this.handleAlertClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+        <DialogTitle>{"Phone Number Already Exists"}</DialogTitle>
+        <DialogActions>
+          <Button onClick={this.handleAlertClose} color="primary" autoFocus>
+            Close
+          </Button>
+        </DialogActions>
+        </Dialog>
+      </div>
       );
     }
     else if (this.state.route === 'home'){
