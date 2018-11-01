@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Redirect} from 'react-router-dom';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { TextField, Button, Grid, Typography, Card, Dialog, DialogActions, DialogTitle } from '@material-ui/core';
 
 class SignIn extends Component {
   constructor(props) {
@@ -9,6 +9,7 @@ class SignIn extends Component {
       signInPhoneNumber: '',
       signInPassword: '',
       route: 'signin',
+      alert: false
     }
   }
 
@@ -17,6 +18,10 @@ class SignIn extends Component {
     if(token !== null){
       this.setState({route: 'home'});
     }
+  }
+
+  handleAlertClose = () => {
+    this.setState({alert: false})
   }
 
   onPhoneNumberChange = (event) => {
@@ -39,7 +44,7 @@ class SignIn extends Component {
       .then(response => response.json())
       .then(data => {
         if(data === false){
-          alert('Invalid Phone Number or Passowrd');
+          this.setState({alert: true});
         }
         else{
           sessionStorage.setItem('token', data.token);
@@ -55,28 +60,49 @@ class SignIn extends Component {
   render() {
     if(this.state.route === 'signin'){
       return (
-        <div>
-          <Form>
-            <FormGroup>
-              <h1>Sign In</h1>
-            </FormGroup>
-            <FormGroup>
-              <Label>Phone Number</Label>
-              <Input onChange={this.onPhoneNumberChange} type="text" placeholder="Enter Phone Number" />
-            </FormGroup>
-            <FormGroup>
-              <Label>Password</Label>
-              <Input onChange={this.onPasswordChange} type="password" placeholder="Enter Password" />
-            </FormGroup>
-            <FormGroup>
-              <Button onClick={this.onSignIn} color="primary" size="lg" block>Sign In</Button>
-            </FormGroup>
-            <FormGroup>
-              <a onClick={this.onSignUpClick} className="f6 link dim black db" href="#0">
-                Sign up
-              </a>              
-            </FormGroup>
-          </Form>
+        <div style={{marginTop: '50px'}}>
+          <Grid container justify="center" alignItems="center">
+            <Card style={{padding: '50px'}}>
+              <Grid container direction="column" justify="center" alignItems="center">
+                <Typography variant="h3">
+                  Sign In
+                </Typography>
+                <TextField
+                  type="text"
+                  label="Enter Phone Number"
+                  placeholder="Enter Phone Number"
+                  margin="normal"
+                  onChange={this.onPhoneNumberChange}
+                />
+                <TextField
+                  type="password"
+                  label="Enter Password"
+                  placeholder="Enter Phone Number"
+                  margin="normal"
+                  onChange={this.onPasswordChange}
+                />
+                <Button variant="contained" color="primary" onClick={this.onSignIn} style={{marginTop: '20px'}}>
+                  Sign In
+                </Button> 
+                <Typography style={{ cursor: 'pointer', marginTop: '20px' }} onClick={this.onSignUpClick}>
+                  Sign Up?
+                </Typography>
+              </Grid>
+            </Card>
+          </Grid>
+          <Dialog
+            open={this.state.alert}
+            onClose={this.handleAlertClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+          <DialogTitle>{"Invalid Phone Number or Password"}</DialogTitle>
+          <DialogActions>
+            <Button onClick={this.handleAlertClose} color="primary" autoFocus>
+              Close
+            </Button>
+          </DialogActions>
+          </Dialog>
         </div>
       );
     }
