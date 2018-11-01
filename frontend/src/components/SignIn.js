@@ -62,7 +62,7 @@ class SignIn extends Component {
             </FormGroup>
             <FormGroup>
               <Label>Phone Number</Label>
-              <Input onChange={this.onPhoneNumberChange} type="text" placeholder="Enter Email" />
+              <Input onChange={this.onPhoneNumberChange} type="text" placeholder="Enter Phone Number" />
             </FormGroup>
             <FormGroup>
               <Label>Password</Label>
