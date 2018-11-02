@@ -67,10 +67,10 @@ class Home extends Component {
           <Grid container justify="center" alignItems="center">
             <Card style={{padding: '50px'}}>
               <Grid container direction="column" justify="center" alignItems="center">
-                <Typography variant="h3">
+                <Typography variant="display3">
                   User Information
                 </Typography>
-                <Table>
+                <Table style={{marginTop: '24px'}}>
                   <TableBody>
                     <TableRow>
                       <TableCell>User ID</TableCell>
@@ -94,7 +94,7 @@ class Home extends Component {
                     </TableRow>
                   </TableBody>
                 </Table>
-                <Button onClick={this.onLogout} variant="contained" color="primary" style={{marginTop: "20px"}} autoFocus>
+                <Button onClick={this.onLogout} variant="contained" color="primary" style={{marginTop: "20px"}}>
                   Logout
                 </Button>
               </Grid>

@@ -58,6 +58,13 @@ class SignIn extends Component {
   onSignUpClick = () => {
     this.setState({route: "signup"})
   }
+
+  handlekeypress = (e) => {
+    if(e.key === "Enter"){
+      this.onSignIn();
+    }
+
+  }
   
   render() {
     if(this.state.route === 'loading'){
@@ -69,7 +76,7 @@ class SignIn extends Component {
     }
     else if(this.state.route === 'signin'){
       return (
-        <div style={{marginTop: '50px'}}>
+        <div style={{marginTop: '128px'}} onKeyPress={this.handlekeypress}>
           <Grid container justify="center" alignItems="center">
             <Card style={{padding: '50px'}}>
               <Grid container direction="column" justify="center" alignItems="center">
