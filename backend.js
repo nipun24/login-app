@@ -64,7 +64,7 @@ app.post('/signup',(req, res) => {
     db.query(`INSERT INTO CUSTOMER VALUES ('${req.body.name}',${req.body.aadhar},'${req.body.password}',DEFAULT,${req.body.phoneNumber})`,(error,results) => {
         if(error){
             console.log(error);
-            res.send(error);
+            res.send(false);
         }
         else{
             jwt.sign(req.body, 'b9e88579af34e13717f84345039b8b4d', function(err, token) {
