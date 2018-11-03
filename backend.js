@@ -20,21 +20,21 @@ app.use(bodyParser.json());
 
 //Used during deployment
 
-const db = new Client({
-    connectionString: process.env.DATABASE_URL,
-    ssl: true,
-})
+// const db = new Client({
+//     connectionString: process.env.DATABASE_URL,
+//     ssl: true,
+// })
 
 
 //Used for development
 
-// const db = new Client({
-//     user: 'postgres',
-//     host: 'localhost',
-//     database: 'final',
-//     password: 'nipun',
-//     port: 5432,
-//   })
+const db = new Client({
+    user: 'postgres',
+    host: 'localhost',
+    database: 'final',
+    password: 'nipun',
+    port: 5432,
+  })
 
 db.connect();
 
@@ -63,7 +63,8 @@ app.post('/signin', (req, res) => {
 app.post('/signup',(req, res) => {
     db.query(`INSERT INTO CUSTOMER VALUES ('${req.body.name}',${req.body.aadhar},'${req.body.password}',DEFAULT,${req.body.phoneNumber})`,(error,results) => {
         if(error){
-            res.send(false);
+            console.log(error);
+            res.send(error);
         }
         else{
             jwt.sign(req.body, 'b9e88579af34e13717f84345039b8b4d', function(err, token) {

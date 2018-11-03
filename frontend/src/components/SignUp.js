@@ -131,7 +131,7 @@ class SignUp extends Component {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-        <DialogTitle>{"Phone Number Already Exists"}</DialogTitle>
+        <DialogTitle>{"Error Signing Up!!"}</DialogTitle>
         <DialogActions>
           <Button onClick={this.handleAlertClose} color="primary" autoFocus>
             Close
